@@ -1,4 +1,5 @@
 #!/usr/bin/env python3
+# 需要 Python 3.10+（使用了 str | None、list[str] 等新语法）
 """
 企业微信机器人消息发送工具（多机器人版）
 
@@ -140,7 +141,6 @@ def handle_slash_command(args: list[str]) -> bool:
         print(f"\033[91m错误：{e}\033[0m", file=sys.stderr)
         sys.exit(1)
     sys.exit(0)
-    return True  # never reached
 
 
 def _handle_config(args: list[str]) -> None:
@@ -419,8 +419,6 @@ def auto_markdown_beautify(content: str, at_all: bool = False, at_users: list = 
     - @所有人 → 末尾追加 <@all>
     - @指定用户 → 末尾追加 <@userid>
     """
-    import re as _re
-
     lines = content.strip().splitlines()
     result_lines = []
 
@@ -433,7 +431,7 @@ def auto_markdown_beautify(content: str, at_all: bool = False, at_users: list = 
     }
 
     # 时间模式：优先匹配复合时间「今天下午3点」，再匹配单独时间词
-    TIME_PATTERN = _re.compile(
+    TIME_PATTERN = re.compile(
         r'((?:今天|明天|后天|周[一二三四五六日天]|大后天)'
         r'(?:\s*(?:[上下]午\s*\d{1,2}\s*[点时半]?))?'
         r'|[上下]午\s*\d{1,2}\s*[点时半]?'
@@ -466,7 +464,7 @@ def auto_markdown_beautify(content: str, at_all: bool = False, at_users: list = 
             result_lines.append("")
             continue
         # 键值对检测：「xxx：yyy」或「xxx: yyy」
-        kv_match = _re.match(r'^([^：:]{1,12})[：:]\s*(.+)$', line)
+        kv_match = re.match(r'^([^：:]{1,12})[：:]\s*(.+)$', line)
         if kv_match:
             k, v = kv_match.group(1), kv_match.group(2)
             result_lines.append(f"> **{k}**：{v}")
@@ -478,9 +476,6 @@ def auto_markdown_beautify(content: str, at_all: bool = False, at_users: list = 
     if body:
         body = TIME_PATTERN.sub(lambda m: f"`{m.group(0)}`", body)
         result_lines = [result_lines[0]] + body.splitlines()
-    else:
-        # 标题行也做时间高亮（保留粗体标记）
-        pass
 
     # 对标题行做时间高亮（替换不在 ** 内的时间）
     result_lines[0] = TIME_PATTERN.sub(lambda m: f"`{m.group(0)}`", result_lines[0])
@@ -668,7 +663,14 @@ def main():
                 content = Path(args.file).read_text(encoding="utf-8")
             if not content:
                 parser.error("请提供 Markdown 内容或 --file")
-            result = send_markdown(resolve_key(), content)
+            # 超过 4096 字节自动改发文件附件
+            if len(content.encode("utf-8")) > 4096:
+                if not args.file:
+                    parser.error("Markdown 内容超过 4096 字节，请通过 --file 指定文件路径以便改发附件")
+                print(f"\033[93m[{bot_label}] Markdown 内容超过 4096 字节，改发文件附件\033[0m")
+                result = send_file(resolve_key(), args.file)
+            else:
+                result = send_markdown(resolve_key(), content)
 
         elif args.msgtype == "markdown_v2":
             content = args.content

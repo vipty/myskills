@@ -253,27 +253,35 @@ AI 收到文本内容后，**自动美化为 Markdown** 再发送，包括：
 
 ## 🔧 脚本调用方式（AI 内部使用）
 
+> **⚠️ 路径说明**：在调用脚本前，先用以下命令确认实际安装路径：
+> ```bash
+> find ~/.claude/skills ~/.workbuddy/skills ~/.*skills -name "send_wecom.py" 2>/dev/null | head -1
+> ```
+> 将下方示例中的 `<SCRIPT>` 替换为实际路径。
+
 ```bash
+SCRIPT=$(find ~/.claude/skills ~/.workbuddy/skills ~/.*skills -name "send_wecom.py" 2>/dev/null | head -1)
+
 # 发送文本（自动美化为 Markdown）
-python3 ~/.workbuddy/skills/wecom-bot/scripts/send_wecom.py text "今天下午 3 点开会"
+python3 "$SCRIPT" text "今天下午 3 点开会"
 
 # 发送纯文本（禁用美化）
-python3 ~/.workbuddy/skills/wecom-bot/scripts/send_wecom.py text "Hello" --no-md
+python3 "$SCRIPT" text "Hello" --no-md
 
 # 发送文件
-python3 ~/.workbuddy/skills/wecom-bot/scripts/send_wecom.py file /path/to/file
+python3 "$SCRIPT" file /path/to/file
 
 # 发送图片
-python3 ~/.workbuddy/skills/wecom-bot/scripts/send_wecom.py image /path/to/image.png
+python3 "$SCRIPT" image /path/to/image.png
 
 # 指定机器人
-python3 ~/.workbuddy/skills/wecom-bot/scripts/send_wecom.py --bot alert text "告警内容"
+python3 "$SCRIPT" --bot alert text "告警内容"
 
 # @所有人
-python3 ~/.workbuddy/skills/wecom-bot/scripts/send_wecom.py text "通知" --at-all
+python3 "$SCRIPT" text "通知" --at-all
 
 # @指定用户
-python3 ~/.workbuddy/skills/wecom-bot/scripts/send_wecom.py text "通知" --at-users zhangsan lisi
+python3 "$SCRIPT" text "通知" --at-users zhangsan lisi
 ```
 
 ---
