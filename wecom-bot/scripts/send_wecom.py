@@ -159,7 +159,7 @@ def _handle_config(args: list[str]) -> None:
         if len(args) < 3:
             print("\033[91m用法：/qw-robot config add <名称> <key>\033[0m")
             print("示例：/qw-robot config add main https://qyapi.weixin.qq.com/cgi-bin/webhook/send?key=xxx")
-            print("示例：/qw-robot config add alert ***REMOVED***")
+            print("示例：/qw-robot config add alert xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx")
             sys.exit(1)
         name = args[1]
         raw_key = args[2]
@@ -274,7 +274,7 @@ def _print_slash_help() -> None:
 
 \033[94m快速配置（设置默认机器人）：\033[0m
   /qw-robot config default https://qyapi.weixin.qq.com/cgi-bin/webhook/send?key=xxx
-  /qw-robot config default ***REMOVED***
+  /qw-robot config default xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx
 
 \033[94m说明：\033[0m
   key 可以是完整的 Webhook URL，也可以是纯 Key 字符串。

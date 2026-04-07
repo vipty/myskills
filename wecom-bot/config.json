@@ -1,9 +1,4 @@
 {
-  "default": "main",
-  "bots": {
-    "main": {
-      "key": "***REMOVED***",
-      "description": "默认机器人"
-    }
-  }
+  "default": "",
+  "bots": {}
 }

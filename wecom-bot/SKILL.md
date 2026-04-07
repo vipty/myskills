@@ -207,7 +207,7 @@ AI 收到文本内容后，**自动美化为 Markdown** 再发送，包括：
 **快速配置示例：**
 ```bash
 # 最简单：直接用 Key 配置默认机器人
-/qw-robot config default ***REMOVED***
+/qw-robot config default xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx
 
 # 添加命名机器人
 /qw-robot config add alert <key>
