@@ -189,36 +189,26 @@ AI 收到文本内容后，**自动美化为 Markdown** 再发送，包括：
 
 ---
 
-## ⚙️ 机器人配置命令
+## ⚙️ 机器人配置
 
-通过斜杠命令管理机器人（首次使用时配置）：
+直接用自然语言告诉 Claude，AI 会自动执行对应操作：
 
-| 命令 | 说明 |
-|------|------|
-| `/qw-robot` | 显示帮助信息 |
-| `/qw-robot config list` | 查看所有已配置的机器人 |
-| `/qw-robot config add <名称> <key>` | 添加机器人（支持 URL 或纯 Key） |
-| `/qw-robot config default <key>` | 快速设置默认机器人 |
-| `/qw-robot config default <名称>` | 按名称设置默认机器人 |
-| `/qw-robot config set <名称> <key>` | 更新已有机器人的 Key |
-| `/qw-robot config remove <名称>` | 删除机器人 |
-| `/qw-robot config info [名称]` | 查看机器人详细信息 |
+| 用户说 | AI 执行 |
+|--------|---------|
+| "帮我配置企业微信机器人，key 是 xxx" | 添加默认机器人 |
+| "查看有哪些机器人" | 列出所有已配置机器人 |
+| "添加一个告警机器人，key 是 xxx" | 添加命名机器人 alert |
+| "把默认机器人改成 alert" | 切换默认机器人 |
+| "删除 report 机器人" | 删除指定机器人 |
+| "更新 main 机器人的 key 为 xxx" | 更新 Key |
 
-**快速配置示例：**
-```bash
-# 最简单：直接用 Key 配置默认机器人
-/qw-robot config default xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx
-
-# 添加命名机器人
-/qw-robot config add alert <key>
-/qw-robot config add report <key>
-```
+> **内部实现**：AI 通过调用 `send_wecom.py /qw-robot config ...` 完成上述操作，用户无需直接输入脚本命令。
 
 ---
 
 ## 📁 配置文件
 
-位置：`~/.workbuddy/skills/wecom-bot/config.json`
+位置：`<skill安装目录>/wecom-bot/config.json`（通常为 `~/.claude/skills/wecom-bot/config.json`）
 
 ```json
 {

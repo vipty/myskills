@@ -10,10 +10,10 @@ cp -r wecom-bot ~/.claude/skills/wecom-bot
 
 ## 首次配置
 
-安装后，在 Claude Code 中运行：
+安装后，直接告诉 Claude：
 
 ```
-/qw-robot config add main <你的-Webhook-Key>
+帮我配置企业微信机器人，key 是 <你的-Webhook-Key>
 ```
 
 Webhook Key 在企业微信管理后台 → 群机器人 → 详情 中获取，格式为 UUID（如 `a0b5a761-xxxx-xxxx-xxxx-xxxxxxxxxxxx`），也可以粘贴完整的 Webhook URL。
@@ -31,10 +31,13 @@ Webhook Key 在企业微信管理后台 → 群机器人 → 详情 中获取，
 
 ## 多机器人
 
-```bash
-/qw-robot config add alert <key>    # 添加告警机器人
-/qw-robot config add report <key>   # 添加报表机器人
-/qw-robot config list               # 查看所有机器人
+同样用自然语言操作：
+
+```
+添加一个告警机器人，key 是 <key>
+添加一个报表机器人，key 是 <key>
+查看有哪些机器人
+把默认机器人改成告警机器人
 ```
 
 ## 注意事项
