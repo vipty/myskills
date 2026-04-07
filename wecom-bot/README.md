@@ -4,8 +4,11 @@
 
 ## 安装
 
+推荐用软链接安装，仓库更新后自动生效：
+
 ```bash
-cp -r wecom-bot ~/.claude/skills/wecom-bot
+git clone https://github.com/vipty/myskills.git ~/myskills
+ln -s ~/myskills/wecom-bot ~/.claude/skills/wecom-bot
 ```
 
 ## 首次配置
