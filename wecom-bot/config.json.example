@@ -1,0 +1,17 @@
+{
+  "default": "main",
+  "bots": {
+    "main": {
+      "key": "your_key_here_main",
+      "description": "默认机器人"
+    },
+    "alert": {
+      "key": "your_key_here_alert",
+      "description": "告警通知机器人"
+    },
+    "report": {
+      "key": "your_key_here_report",
+      "description": "报表推送机器人"
+    }
+  }
+}
